@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Edit Participant - Club Marathon</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+          rel="stylesheet">
+
+    <style>
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f6f3fa;
+            color: #333;
+        }
+
+        /* NAVBAR */
+        .navbar-custom {
+            background: linear-gradient(135deg, #4b145f, #741b75);
+            padding: 16px 25px;
+            box-shadow: 0 4px 15px rgba(75, 20, 95, 0.25);
+        }
+
+        .brand {
+            color: white;
+            font-size: 23px;
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+        .brand span {
+            color: #ffd166;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            margin-left: 20px;
+            font-weight: 500;
+        }
+
+        .nav-links a:hover {
+            color: #ffd166;
+        }
+
+        /* HEADER */
+        .page-header {
+            text-align: center;
+            padding: 35px 15px 25px;
+        }
+
+        .page-header h1 {
+            color: #4b145f;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .page-header p {
+            color: #777;
+            margin: 0;
+        }
+
+        .gold-line {
+            width: 75px;
+            height: 4px;
+            background: #ffd166;
+            margin: 15px auto;
+            border-radius: 10px;
+        }
+
+        /* MAIN CARD */
+        .edit-card {
+            max-width: 850px;
+            margin: 0 auto 50px;
+            background: white;
+            border-radius: 22px;
+            padding: 35px;
+            box-shadow: 0 10px 35px rgba(75, 20, 95, 0.12);
+            border: 1px solid #eee4f3;
+        }
+
+        .section-title {
+            color: #4b145f;
+            font-size: 18px;
+            font-weight: bold;
+            margin-top: 25px;
+            margin-bottom: 18px;
+            padding-bottom: 8px;
+            border-bottom: 2px solid #f0d9f0;
+        }
+
+        .form-label {
+            font-weight: 600;
+            color: #4b145f;
+        }
+
+        .form-control,
+        .form-select {
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            padding: 11px 13px;
+        }
+
+        .form-control:focus,
+        .form-select:focus {
+            border-color: #741b75;
+            box-shadow: 0 0 0 0.2rem rgba(116, 27, 117, 0.12);
+        }
+
+        textarea.form-control {
+            resize: vertical;
+        }
+
+        /* BUTTONS */
+        .btn-update {
+            background: linear-gradient(135deg, #741b75, #4b145f);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            padding: 13px;
+            font-size: 16px;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        .btn-update:hover {
+            background: linear-gradient(135deg, #5c155f, #3b104a);
+            color: white;
+            transform: translateY(-1px);
+        }
+
+        .btn-view {
+            background: #f05a7e;
+            color: white;
+            border: none;
+            border-radius: 12px;
+            padding: 13px;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        .btn-view:hover {
+            background: #d94669;
+            color: white;
+            transform: translateY(-1px);
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-top: 15px;
+            color: #741b75;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .back-link:hover {
+            color: #f05a7e;
+        }
+
+        /* FOOTER */
+        footer {
+            background: #35103f;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            margin-top: 20px;
+        }
+
+        footer span {
+            color: #ffd166;
+            font-weight: bold;
+        }
+
+        /* MOBILE */
+        @media (max-width: 768px) {
+
+            .navbar-custom {
+                text-align: center;
+            }
+
+            .nav-links {
+                margin-top: 10px;
+            }
+
+            .nav-links a {
+                margin: 0 7px;
+                font-size: 14px;
+            }
+
+            .edit-card {
+                margin: 0 12px 40px;
+                padding: 22px;
+                border-radius: 18px;
+            }
+
+            .page-header h1 {
+                font-size: 27px;
+            }
+        }
+
+    </style>
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar-custom">
+
+    <div class="container-fluid d-flex justify-content-between align-items-center flex-wrap">
+
+        <a href="/" class="brand">
+            🏃 Club <span>Marathon</span>
+        </a>
+
+        <div class="nav-links">
+            <a href="/">Home</a>
+            <a href="/dashboard">Dashboard</a>
+            <a href="/view">Participants</a>
+            <a href="/reports">Reports</a>
+        </div>
+
+    </div>
+
+</nav>
+
+
+<!-- PAGE HEADER -->
+<div class="page-header">
+
+    <h1>✏️ Edit Participant</h1>
+
+    <div class="gold-line"></div>
+
+    <p>Update the participant registration details</p>
+
+</div>
+
+
+<!-- MAIN CARD -->
+<div class="edit-card">
+
+    <form action="/update/{{ participant.id }}" method="POST">
+
+        <!-- PERSONAL INFORMATION -->
+        <div class="section-title">
+            👤 Personal Information
+        </div>
+
+        <!-- Full Name -->
+        <div class="mb-3">
+
+            <label class="form-label">Full Name</label>
+
+            <input
+                type="text"
+                name="name"
+                class="form-control"
+                value="{{ participant.name or '' }}"
+                required
+            >
+
+        </div>
+
+
+        <!-- Age -->
+        <div class="mb-3">
+
+            <label class="form-label">Age</label>
+
+            <input
+                type="number"
+                name="age"
+                class="form-control"
+                value="{{ participant.age or '' }}"
+                required
+            >
+
+        </div>
+
+
+        <!-- Gender -->
+        <div class="mb-3">
+
+            <label class="form-label">Gender</label>
+
+            <select name="gender" class="form-select" required>
+
+                <option value="">Select Gender</option>
+
+                <option value="Male"
+                    {% if participant.gender == "Male" %}selected{% endif %}>
+                    Male
+                </option>
+
+                <option value="Female"
+                    {% if participant.gender == "Female" %}selected{% endif %}>
+                    Female
+                </option>
+
+                <option value="Other"
+                    {% if participant.gender == "Other" %}selected{% endif %}>
+                    Other
+                </option>
+
+            </select>
+
+        </div>
+
+
+        <!-- Email -->
+        <div class="mb-3">
+
+            <label class="form-label">Email</label>
+
+            <input
+                type="email"
+                name="email"
+                class="form-control"
+                value="{{ participant.email or '' }}"
+                required
+            >
+
+        </div>
+
+
+        <!-- Mobile -->
+        <div class="mb-3">
+
+            <label class="form-label">Mobile Number</label>
+
+            <input
+                type="text"
+                name="mobile"
+                class="form-control"
+                value="{{ participant.mobile or '' }}"
+                required
+            >
+
+        </div>
+
+
+        <!-- CONTACT INFORMATION -->
+        <div class="section-title">
+            📍 Contact & Emergency Information
+        </div>
+
+
+        <!-- Address -->
+        <div class="mb-3">
+
+            <label class="form-label">Address</label>
+
+            <textarea
+                name="address"
+                class="form-control"
+                rows="3"
+            >{{ participant.address or '' }}</textarea>
+
+        </div>
+
+
+        <!-- Blood Group -->
+        <div class="mb-3">
+
+            <label class="form-label">Blood Group</label>
+
+            <select name="blood_group" class="form-select">
+
+                <option value="">Select Blood Group</option>
+
+                <option value="A+"
+                    {% if participant.blood_group == "A+" %}selected{% endif %}>
+                    A+
+                </option>
+
+                <option value="A-"
+                    {% if participant.blood_group == "A-" %}selected{% endif %}>
+                    A-
+                </option>
+
+                <option value="B+"
+                    {% if participant.blood_group == "B+" %}selected{% endif %}>
+                    B+
+                </option>
+
+                <option value="B-"
+                    {% if participant.blood_group == "B-" %}selected{% endif %}>
+                    B-
+                </option>
+
+                <option value="AB+"
+                    {% if participant.blood_group == "AB+" %}selected{% endif %}>
+                    AB+
+                </option>
+
+                <option value="AB-"
+                    {% if participant.blood_group == "AB-" %}selected{% endif %}>
+                    AB-
+                </option>
+
+                <option value="O+"
+                    {% if participant.blood_group == "O+" %}selected{% endif %}>
+                    O+
+                </option>
+
+                <option value="O-"
+                    {% if participant.blood_group == "O-" %}selected{% endif %}>
+                    O-
+                </option>
+
+            </select>
+
+        </div>
+
+
+        <!-- Emergency Contact -->
+        <div class="mb-3">
+
+            <label class="form-label">Emergency Contact</label>
+
+            <input
+                type="text"
+                name="emergency_contact"
+                class="form-control"
+                value="{{ participant.emergency_contact or '' }}"
+            >
+
+        </div>
+
+
+        <!-- MARATHON DETAILS -->
+        <div class="section-title">
+            🏃 Marathon Details
+        </div>
+
+
+        <!-- Race Distance -->
+        <div class="mb-3">
+
+            <label class="form-label">Race Distance</label>
+
+            <select name="race_distance" class="form-select">
+
+                <option value="">Select Distance</option>
+
+                <option value="5K"
+                    {% if participant.race_distance == "5K" %}selected{% endif %}>
+                    5K
+                </option>
+
+                <option value="10K"
+                    {% if participant.race_distance == "10K" %}selected{% endif %}>
+                    10K
+                </option>
+
+                <option value="21K (Half Marathon)"
+                    {% if participant.race_distance == "21K (Half Marathon)" %}selected{% endif %}>
+                    21K (Half Marathon)
+                </option>
+
+                <option value="42K (Full Marathon)"
+                    {% if participant.race_distance == "42K (Full Marathon)" %}selected{% endif %}>
+                    42K (Full Marathon)
+                </option>
+
+            </select>
+
+        </div>
+
+
+        <!-- T-Shirt Size -->
+        <div class="mb-3">
+
+            <label class="form-label">T-Shirt Size</label>
+
+            <select name="tshirt_size" class="form-select">
+
+                <option value="">Select Size</option>
+
+                <option value="S"
+                    {% if participant.tshirt_size == "S" %}selected{% endif %}>
+                    S
+                </option>
+
+                <option value="M"
+                    {% if participant.tshirt_size == "M" %}selected{% endif %}>
+                    M
+                </option>
+
+                <option value="L"
+                    {% if participant.tshirt_size == "L" %}selected{% endif %}>
+                    L
+                </option>
+
+                <option value="XL"
+                    {% if participant.tshirt_size == "XL" %}selected{% endif %}>
+                    XL
+                </option>
+
+            </select>
+
+        </div>
+
+
+        <!-- PAYMENT -->
+        <div class="section-title">
+            💳 Membership & Payment
+        </div>
+
+
+        <!-- Fee Status -->
+        <div class="mb-3">
+
+            <label class="form-label">Fee Status</label>
+
+            <select name="fee_status" class="form-select">
+
+                <option value="">Select Status</option>
+
+                <option value="Paid"
+                    {% if participant.fee_status == "Paid" %}selected{% endif %}>
+                    Paid
+                </option>
+
+                <option value="Pending"
+                    {% if participant.fee_status == "Pending" %}selected{% endif %}>
+                    Pending
+                </option>
+
+            </select>
+
+        </div>
+
+
+        <!-- Membership Type -->
+        <div class="mb-4">
+
+            <label class="form-label">Membership Type</label>
+
+            <input
+                type="text"
+                name="membership_type"
+                class="form-control"
+                value="{{ participant.membership_type or '' }}"
+            >
+
+        </div>
+
+
+        <!-- UPDATE BUTTON -->
+        <button type="submit" class="btn-update w-100">
+            ✨ Update Participant
+        </button>
+
+    </form>
+
+
+    <!-- VIEW PARTICIPANTS -->
+    <a href="/view" class="btn btn-view w-100 mt-3">
+        👥 View Participants
+    </a>
+
+</div>
+
+
+<!-- FOOTER -->
+<footer>
+
+    © 2026 <span>Club Marathon</span> |
+    Coach Name: Sanjay Shinde
+
+</footer>
+
+
+</body>
+</html>

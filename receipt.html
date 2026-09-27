@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Payment Receipt - Club Marathon</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            padding: 30px 15px;
+            background: #f8f5fc;
+            font-family: Arial, Helvetica, sans-serif;
+            color: #29213d;
+        }
+
+        /* ================= RECEIPT ================= */
+
+        .receipt {
+            max-width: 750px;
+            margin: auto;
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 35px rgba(59, 23, 109, 0.15);
+        }
+
+        /* ================= HEADER ================= */
+
+        .header {
+            position: relative;
+            overflow: hidden;
+            background: linear-gradient(135deg, #3b176d, #762d92);
+            color: white;
+            text-align: center;
+            padding: 35px 20px;
+        }
+
+        .header::before {
+            content: "";
+            position: absolute;
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.05);
+            top: -80px;
+            left: -50px;
+        }
+
+        .header::after {
+            content: "";
+            position: absolute;
+            width: 190px;
+            height: 190px;
+            border-radius: 50%;
+            background: rgba(239,102,133,0.10);
+            right: -60px;
+            bottom: -90px;
+        }
+
+        .logo,
+        .header h1,
+        .header p,
+        .gold-line {
+            position: relative;
+            z-index: 1;
+        }
+
+        .logo {
+            width: 82px;
+            height: 82px;
+            object-fit: contain;
+            margin-bottom: 10px;
+            background: white;
+            padding: 4px;
+            border-radius: 50%;
+        }
+
+        .header h1 {
+            margin: 5px 0;
+            font-size: 30px;
+            font-weight: 700;
+        }
+
+        .header p {
+            margin: 6px 0 0;
+            font-size: 14px;
+            opacity: 0.9;
+        }
+
+        .gold-line {
+            width: 60px;
+            height: 4px;
+            background: #e7bd57;
+            border-radius: 10px;
+            margin: 13px auto 0;
+        }
+
+        /* ================= RECEIPT TITLE ================= */
+
+        .receipt-title {
+            padding: 28px 25px 15px;
+            text-align: center;
+        }
+
+        .receipt-title h2 {
+            margin: 0;
+            font-size: 24px;
+            color: #3b176d;
+            font-weight: 700;
+        }
+
+        .official-text {
+            font-size: 13px;
+            color: #81798f;
+            margin-top: 8px;
+        }
+
+        .status {
+            display: inline-block;
+            margin-top: 12px;
+            padding: 7px 20px;
+            border-radius: 20px;
+            background: #dff5e8;
+            color: #16834b;
+            font-weight: bold;
+            font-size: 13px;
+        }
+
+        /* ================= DETAILS ================= */
+
+        .details {
+            padding: 10px 35px 30px;
+        }
+
+        .row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+            padding: 15px 0;
+            border-bottom: 1px solid #eee7f5;
+        }
+
+        .label {
+            color: #81798f;
+            font-size: 14px;
+        }
+
+        .value {
+            font-weight: 600;
+            color: #3b176d;
+            text-align: right;
+        }
+
+        /* ================= AMOUNT ================= */
+
+        .amount-box {
+            margin: 25px 0 5px;
+            padding: 22px;
+            background: linear-gradient(
+                135deg,
+                #f8f2fc,
+                #fff7f9
+            );
+            border: 1px solid #eadff1;
+            border-radius: 14px;
+            text-align: center;
+        }
+
+        .amount-box .label {
+            display: block;
+            margin-bottom: 6px;
+            color: #71697d;
+        }
+
+        .amount {
+            font-size: 38px;
+            font-weight: 700;
+            color: #3b176d;
+        }
+
+        /* ================= FOOTER ================= */
+
+        .footer {
+            text-align: center;
+            padding: 22px;
+            background: #faf8fc;
+            border-top: 1px solid #eee7f5;
+            color: #81798f;
+            font-size: 13px;
+        }
+
+        .footer strong {
+            color: #3b176d;
+        }
+
+        /* ================= BUTTONS ================= */
+
+        .buttons {
+            max-width: 650px;
+            margin: 22px auto 0;
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            border: none;
+            padding: 12px 22px;
+            border-radius: 9px;
+            font-size: 14px;
+            font-weight: bold;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            transition: 0.3s;
+        }
+
+        .print-btn {
+            background: linear-gradient(135deg, #3b176d, #6f2c91);
+            color: white;
+            box-shadow: 0 5px 14px rgba(59, 23, 109, 0.18);
+        }
+
+        .print-btn:hover {
+            background: #ef6685;
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .back-btn {
+            background: #ef6685;
+            color: white;
+            box-shadow: 0 5px 14px rgba(239, 102, 133, 0.18);
+        }
+
+        .back-btn:hover {
+            background: #df5272;
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        /* ================= PRINT ================= */
+
+        @media print {
+
+            body {
+                background: white;
+                padding: 0;
+            }
+
+            .receipt {
+                max-width: 100%;
+                box-shadow: none;
+                border-radius: 0;
+            }
+
+            .buttons {
+                display: none;
+            }
+
+        }
+
+        /* ================= MOBILE ================= */
+
+        @media (max-width: 500px) {
+
+            body {
+                padding: 10px;
+            }
+
+            .receipt {
+                border-radius: 15px;
+            }
+
+            .details {
+                padding: 10px 18px 20px;
+            }
+
+            .row {
+                gap: 10px;
+                padding: 13px 0;
+            }
+
+            .label,
+            .value {
+                font-size: 13px;
+            }
+
+            .header h1 {
+                font-size: 25px;
+            }
+
+            .receipt-title h2 {
+                font-size: 21px;
+            }
+
+            .amount {
+                font-size: 32px;
+            }
+
+            .buttons {
+                flex-direction: column;
+                padding: 0 10px;
+            }
+
+            .btn {
+                text-align: center;
+                width: 100%;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <div class="receipt">
+
+
+        <!-- ================= HEADER ================= -->
+
+        <div class="header">
+
+            <img
+                src="{{ url_for('static', filename='logo.jpeg') }}"
+                class="logo"
+                alt="Club Marathon Logo">
+
+            <h1>
+                Club Marathon
+            </h1>
+
+            <p>
+                Participant Registration System
+            </p>
+
+            <div class="gold-line"></div>
+
+        </div>
+
+
+        <!-- ================= RECEIPT TITLE ================= -->
+
+        <div class="receipt-title">
+
+            <h2>
+                🧾 Payment Receipt
+            </h2>
+
+            <div class="official-text">
+                Official Payment Confirmation
+            </div>
+
+            <div class="status">
+                {{ transaction.payment_status }}
+            </div>
+
+        </div>
+
+
+        <!-- ================= RECEIPT DETAILS ================= -->
+
+        <div class="details">
+
+
+            <div class="row">
+
+                <span class="label">
+                    Transaction ID
+                </span>
+
+                <span class="value">
+                    #{{ transaction.transaction_id }}
+                </span>
+
+            </div>
+
+
+            <div class="row">
+
+                <span class="label">
+                    Participant Name
+                </span>
+
+                <span class="value">
+                    {{ transaction.participant_name }}
+                </span>
+
+            </div>
+
+
+            <div class="row">
+
+                <span class="label">
+                    Membership Type
+                </span>
+
+                <span class="value">
+                    {{ transaction.membership_type }}
+                </span>
+
+            </div>
+
+
+            <div class="row">
+
+                <span class="label">
+                    Race Distance
+                </span>
+
+                <span class="value">
+                    {{ transaction.race_distance }}
+                </span>
+
+            </div>
+
+
+            <div class="row">
+
+                <span class="label">
+                    Payment Method
+                </span>
+
+                <span class="value">
+                    {{ transaction.payment_method }}
+                </span>
+
+            </div>
+
+
+            <div class="row">
+
+                <span class="label">
+                    Payment Date
+                </span>
+
+                <span class="value">
+                    {{ transaction.transaction_date }}
+                </span>
+
+            </div>
+
+
+            <!-- ================= AMOUNT ================= -->
+
+            <div class="amount-box">
+
+                <span class="label">
+                    Amount Paid
+                </span>
+
+                <div class="amount">
+                    ₹{{ transaction.amount }}
+                </div>
+
+            </div>
+
+
+        </div>
+
+
+        <!-- ================= FOOTER ================= -->
+
+        <div class="footer">
+
+            <strong>
+                Thank you for registering with Club Marathon!
+            </strong>
+
+            <br><br>
+
+            This is a computer-generated payment receipt.
+
+        </div>
+
+
+    </div>
+
+
+    <!-- ================= BUTTONS ================= -->
+
+    <div class="buttons">
+
+        <button
+            class="btn print-btn"
+            onclick="window.print()">
+
+            🖨 Print Receipt
+
+        </button>
+
+
+        <a
+            href="/transactions"
+            class="btn back-btn">
+
+            ← Back to Transactions
+
+        </a>
+
+    </div>
+
+
+</body>
+
+</html>

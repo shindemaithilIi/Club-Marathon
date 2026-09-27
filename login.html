@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Login - Club Marathon</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: Arial, sans-serif;
+
+            background:
+                radial-gradient(circle at top left, #7b2cbf 0%, transparent 35%),
+                radial-gradient(circle at bottom right, #ff4f81 0%, transparent 35%),
+                linear-gradient(135deg, #240046, #3c096c, #10002b);
+
+            padding: 20px;
+        }
+
+        .login-box {
+            width: 100%;
+            max-width: 430px;
+            background: rgba(255, 255, 255, 0.97);
+            padding: 38px 35px;
+            border-radius: 24px;
+
+            box-shadow:
+                0 20px 60px rgba(0, 0, 0, 0.35),
+                0 0 0 1px rgba(255, 255, 255, 0.2);
+
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Gold top line */
+        .login-box::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(
+                90deg,
+                #6a0dad,
+                #ff4f81,
+                #f5b700
+            );
+        }
+
+        .logo {
+            display: block;
+            width: 90px;
+            height: 90px;
+            object-fit: contain;
+            margin: 5px auto 15px;
+        }
+
+        h1 {
+            text-align: center;
+            margin: 5px 0 4px;
+
+            color: #3c096c;
+            font-size: 30px;
+            font-weight: 800;
+            letter-spacing: 0.3px;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #777;
+            margin-bottom: 28px;
+            font-size: 15px;
+        }
+
+        .section-title {
+            text-align: center;
+            color: #6a0dad;
+            font-size: 13px;
+            font-weight: bold;
+            margin-bottom: 22px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+        input {
+            width: 100%;
+            padding: 14px 15px;
+            margin-bottom: 18px;
+
+            border: 1.5px solid #ddd;
+            border-radius: 10px;
+
+            font-size: 15px;
+            outline: none;
+            background: #fafafa;
+
+            transition: 0.25s;
+        }
+
+        input:focus {
+            border-color: #8e2de2;
+            background: white;
+
+            box-shadow:
+                0 0 0 3px rgba(142, 45, 226, 0.12);
+        }
+
+        button {
+            width: 100%;
+            padding: 14px;
+
+            border: none;
+            border-radius: 10px;
+
+            background: linear-gradient(
+                135deg,
+                #6a0dad,
+                #9d2cff
+            );
+
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+
+            cursor: pointer;
+
+            box-shadow:
+                0 7px 18px rgba(106, 13, 173, 0.3);
+
+            transition: 0.25s;
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+
+            background: linear-gradient(
+                135deg,
+                #ff4f81,
+                #d63384
+            );
+
+            box-shadow:
+                0 9px 22px rgba(214, 51, 132, 0.3);
+        }
+
+        .error {
+            background: #fff0f3;
+            color: #c2185b;
+
+            border-left: 4px solid #ff4f81;
+
+            padding: 11px 12px;
+            border-radius: 8px;
+
+            margin-bottom: 18px;
+            text-align: center;
+
+            font-size: 14px;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 22px;
+
+            color: #888;
+            font-size: 12px;
+        }
+
+        .footer span {
+            color: #f5b700;
+            font-weight: bold;
+        }
+
+        /* Small gold decorative circle */
+        .gold-dot {
+            width: 8px;
+            height: 8px;
+            background: #f5b700;
+            border-radius: 50%;
+            margin: 0 auto 10px;
+        }
+
+        @media (max-width: 480px) {
+
+            .login-box {
+                padding: 32px 24px;
+                border-radius: 20px;
+            }
+
+            h1 {
+                font-size: 26px;
+            }
+
+            .logo {
+                width: 80px;
+                height: 80px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="login-box">
+
+        <img
+            src="{{ url_for('static', filename='logo.jpeg') }}"
+            class="logo"
+            alt="Club Marathon">
+
+        <div class="gold-dot"></div>
+
+        <h1>Club Marathon</h1>
+
+        <div class="subtitle">
+            Admin Login
+        </div>
+
+        <div class="section-title">
+            Participant Management System
+        </div>
+
+        {% if error %}
+            <div class="error">
+                {{ error }}
+            </div>
+        {% endif %}
+
+        <form method="POST" action="/login">
+
+            <label>Username</label>
+
+            <input
+                type="text"
+                name="username"
+                placeholder="Enter username"
+                required
+            >
+
+            <label>Password</label>
+
+            <input
+                type="password"
+                name="password"
+                placeholder="Enter password"
+                required
+            >
+
+            <button type="submit">
+                🔐 &nbsp; Login
+            </button>
+
+        </form>
+
+        <div class="footer">
+            Club Marathon Participant Registration System
+            <br>
+            <span>●</span> Run • Register • Achieve
+        </div>
+
+    </div>
+
+</body>
+</html>

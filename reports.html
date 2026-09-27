@@ -1,0 +1,720 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Reports - Club Marathon</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+          rel="stylesheet">
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            background: #f8f5fc;
+            font-family: Arial, sans-serif;
+            color: #29213d;
+        }
+
+
+        /* ================= NAVBAR ================= */
+
+        .navbar {
+            background: linear-gradient(135deg, #3b176d, #6f2c91);
+            padding: 12px 35px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 4px 15px rgba(59, 23, 109, 0.25);
+        }
+
+        .logo {
+            color: white;
+            font-size: 20px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo img {
+            width: 45px;
+            height: 45px;
+            object-fit: contain;
+            border-radius: 50%;
+            background: white;
+            padding: 3px;
+            display: block;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            margin-left: 7px;
+            padding: 9px 14px;
+            border-radius: 8px;
+            transition: 0.3s;
+            font-size: 14px;
+        }
+
+        .nav-links a:hover {
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        .nav-links .active {
+            background: #ef6685;
+        }
+
+
+        /* ================= MAIN CONTAINER ================= */
+
+        .main-container {
+            width: 92%;
+            max-width: 1150px;
+            margin: 35px auto;
+        }
+
+
+        /* ================= HEADER ================= */
+
+        .header {
+            position: relative;
+            overflow: hidden;
+            background: linear-gradient(135deg, #3b176d, #762d92);
+            color: white;
+            padding: 48px 20px;
+            border-radius: 22px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(59, 23, 109, 0.18);
+        }
+
+        .header::before {
+            content: "";
+            position: absolute;
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.06);
+            top: -70px;
+            left: -50px;
+        }
+
+        .header::after {
+            content: "";
+            position: absolute;
+            width: 220px;
+            height: 220px;
+            border-radius: 50%;
+            background: rgba(239, 102, 133, 0.10);
+            right: -70px;
+            bottom: -100px;
+        }
+
+        .header h1 {
+            position: relative;
+            z-index: 1;
+            margin: 0;
+            font-size: 34px;
+            font-weight: 700;
+        }
+
+        .header p {
+            position: relative;
+            z-index: 1;
+            margin-top: 12px;
+            margin-bottom: 0;
+            font-size: 16px;
+            opacity: 0.92;
+        }
+
+        .gold-line {
+            width: 65px;
+            height: 4px;
+            background: #e7bd57;
+            border-radius: 10px;
+            margin: 15px auto 0;
+        }
+
+
+        /* ================= SECTION TITLE ================= */
+
+        .section-title {
+            margin-top: 42px;
+            margin-bottom: 20px;
+            color: #3b176d;
+            text-align: center;
+            font-size: 24px;
+            font-weight: 700;
+        }
+
+
+        /* ================= STATISTICS ================= */
+
+        .statistics {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+
+        .report-card,
+        .payment-card {
+            background: white;
+            border-radius: 18px;
+            padding: 30px 15px;
+            text-align: center;
+            box-shadow: 0 6px 20px rgba(59, 23, 109, 0.08);
+            border: 1px solid #eee7f5;
+            transition: 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .report-card::before,
+        .payment-card::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, #3b176d, #ef6685);
+        }
+
+        .report-card:hover,
+        .payment-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 12px 28px rgba(59, 23, 109, 0.14);
+        }
+
+        .report-card h5,
+        .payment-card h5 {
+            margin-bottom: 13px;
+            color: #4c4560;
+            font-weight: 600;
+        }
+
+        .number {
+            font-size: 40px;
+            font-weight: 700;
+            color: #3b176d !important;
+        }
+
+
+        /* ================= PAYMENT SPECIAL COLORS ================= */
+
+        .payment-card:nth-child(1) .number {
+            color: #198754 !important;
+        }
+
+        .payment-card:nth-child(2) .number {
+            color: #d89b00 !important;
+        }
+
+        .payment-card:nth-child(3) .number {
+            color: #3b176d !important;
+        }
+
+
+        /* ================= RACE STATISTICS ================= */
+
+        .race-statistics {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+        }
+
+        .race-card {
+            background: white;
+            border-radius: 18px;
+            padding: 30px 15px;
+            text-align: center;
+            box-shadow: 0 6px 20px rgba(59, 23, 109, 0.08);
+            border: 1px solid #eee7f5;
+            border-top: 5px solid #3b176d;
+            transition: 0.3s;
+        }
+
+        .race-card:nth-child(2) {
+            border-top-color: #6f2c91;
+        }
+
+        .race-card:nth-child(3) {
+            border-top-color: #ef6685;
+        }
+
+        .race-card:nth-child(4) {
+            border-top-color: #e7bd57;
+        }
+
+        .race-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 12px 28px rgba(59, 23, 109, 0.14);
+        }
+
+        .race-card h2 {
+            color: #3b176d;
+            margin: 0 0 10px;
+            font-size: 28px;
+            font-weight: 700;
+        }
+
+        .race-card:nth-child(3) h2 {
+            color: #ef6685;
+        }
+
+        .race-card:nth-child(4) h2 {
+            color: #b58a16;
+        }
+
+        .race-number {
+            font-size: 40px;
+            font-weight: 700;
+            color: #29213d;
+        }
+
+        .race-card p {
+            margin-bottom: 0;
+            color: #81798f;
+            font-size: 14px;
+        }
+
+
+        /* ================= BUTTONS ================= */
+
+        .buttons {
+            text-align: center;
+            margin-top: 40px;
+        }
+
+        .custom-button {
+            display: inline-block;
+            padding: 12px 21px;
+            margin: 5px;
+            border-radius: 9px;
+            text-decoration: none;
+            color: white;
+            background: linear-gradient(135deg, #3b176d, #6f2c91);
+            transition: 0.3s;
+            font-weight: 600;
+            box-shadow: 0 5px 14px rgba(59, 23, 109, 0.18);
+        }
+
+        .custom-button:hover {
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 18px rgba(59, 23, 109, 0.25);
+        }
+
+        .secondary-button {
+            background: #ef6685;
+        }
+
+        .secondary-button:hover {
+            background: #df5272;
+        }
+
+
+        /* ================= FOOTER ================= */
+
+        .footer {
+            text-align: center;
+            color: #81798f;
+            margin-top: 45px;
+            padding: 25px;
+            border-top: 1px solid #e8e0ef;
+        }
+
+        .footer strong {
+            color: #3b176d;
+        }
+
+
+        /* ================= TABLET ================= */
+
+        @media (max-width: 900px) {
+
+            .statistics {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .race-statistics {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+        }
+
+
+        /* ================= MOBILE ================= */
+
+        @media (max-width: 600px) {
+
+            .navbar {
+                flex-direction: column;
+                gap: 12px;
+                padding: 12px;
+            }
+
+            .nav-links {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .nav-links a {
+                margin: 3px;
+                padding: 8px 11px;
+                font-size: 13px;
+            }
+
+            .statistics,
+            .race-statistics {
+                grid-template-columns: 1fr;
+            }
+
+            .main-container {
+                width: 94%;
+                margin-top: 25px;
+            }
+
+            .header {
+                padding: 38px 15px;
+            }
+
+            .header h1 {
+                font-size: 27px;
+            }
+
+            .header p {
+                font-size: 14px;
+            }
+
+            .section-title {
+                font-size: 21px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <!-- ================= NAVIGATION ================= -->
+
+    <div class="navbar">
+
+        <div class="logo">
+
+            <img src="/static/logo.jpeg" alt="Club Marathon Logo">
+
+            <span>Club Marathon</span>
+
+        </div>
+
+
+        <div class="nav-links">
+
+            <a href="/">
+                Home
+            </a>
+
+            <a href="/dashboard">
+                Dashboard
+            </a>
+
+            <a href="/view">
+                Participants
+            </a>
+
+            <a href="/reports" class="active">
+                Reports
+            </a>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- ================= MAIN ================= -->
+
+    <div class="main-container">
+
+
+        <!-- ================= HEADER ================= -->
+
+        <div class="header">
+
+            <h1>
+                🏃 Club Marathon Reports
+            </h1>
+
+            <div class="gold-line"></div>
+
+            <p>
+                Participant Registration & Race Statistics
+            </p>
+
+        </div>
+
+
+
+        <!-- ================= PARTICIPANT STATISTICS ================= -->
+
+        <h3 class="section-title">
+            📊 Participant Statistics
+        </h3>
+
+
+        <div class="statistics">
+
+
+            <div class="report-card">
+
+                <h5>
+                    👥 Total Participants
+                </h5>
+
+                <div class="number text-primary">
+                    {{ total|default(0) }}
+                </div>
+
+            </div>
+
+
+
+            <div class="report-card">
+
+                <h5>
+                    👨 Male Participants
+                </h5>
+
+                <div class="number text-info">
+                    {{ male|default(0) }}
+                </div>
+
+            </div>
+
+
+
+            <div class="report-card">
+
+                <h5>
+                    👩 Female Participants
+                </h5>
+
+                <div class="number text-danger">
+                    {{ female|default(0) }}
+                </div>
+
+            </div>
+
+
+        </div>
+
+
+
+        <!-- ================= PAYMENT STATISTICS ================= -->
+
+        <h3 class="section-title">
+            💰 Payment Statistics
+        </h3>
+
+
+        <div class="statistics">
+
+
+            <div class="payment-card">
+
+                <h5>
+                    💰 Fee Paid
+                </h5>
+
+                <div class="number text-success">
+                    {{ paid|default(0) }}
+                </div>
+
+            </div>
+
+
+
+            <div class="payment-card">
+
+                <h5>
+                    ⏳ Fee Pending
+                </h5>
+
+                <div class="number text-warning">
+                    {{ pending|default(0) }}
+                </div>
+
+            </div>
+
+
+
+            <div class="payment-card">
+
+                <h5>
+                    📋 Total Registrations
+                </h5>
+
+                <div class="number text-primary">
+                    {{ total|default(0) }}
+                </div>
+
+            </div>
+
+
+        </div>
+
+
+
+        <!-- ================= RACE STATISTICS ================= -->
+
+        <h3 class="section-title">
+            🏃 Race Distance Statistics
+        </h3>
+
+
+        <div class="race-statistics">
+
+
+            <div class="race-card">
+
+                <h2>
+                    5K
+                </h2>
+
+                <div class="race-number">
+                    {{ race_5k|default(0) }}
+                </div>
+
+                <p>
+                    Participants
+                </p>
+
+            </div>
+
+
+
+            <div class="race-card">
+
+                <h2>
+                    10K
+                </h2>
+
+                <div class="race-number">
+                    {{ race_10k|default(0) }}
+                </div>
+
+                <p>
+                    Participants
+                </p>
+
+            </div>
+
+
+
+            <div class="race-card">
+
+                <h2>
+                    21K
+                </h2>
+
+                <div class="race-number">
+                    {{ race_21k|default(0) }}
+                </div>
+
+                <p>
+                    Half Marathon
+                </p>
+
+            </div>
+
+
+
+            <div class="race-card">
+
+                <h2>
+                    42K
+                </h2>
+
+                <div class="race-number">
+                    {{ race_42k|default(0) }}
+                </div>
+
+                <p>
+                    Full Marathon
+                </p>
+
+            </div>
+
+
+        </div>
+
+
+
+        <!-- ================= BUTTONS ================= -->
+
+        <div class="buttons">
+
+            <a href="/dashboard"
+               class="custom-button secondary-button">
+
+                ⬅ Back to Dashboard
+
+            </a>
+
+
+            <a href="/view"
+               class="custom-button">
+
+                👥 View Participants
+
+            </a>
+
+        </div>
+
+
+
+        <!-- ================= FOOTER ================= -->
+
+        <div class="footer">
+
+            <p>
+                ©️ 2026 Club Marathon |
+                Participant Management System
+            </p>
+
+            <p>
+                Coach:
+                <strong>Sanjay Shinde</strong>
+            </p>
+
+        </div>
+
+
+    </div>
+
+
+</body>
+
+</html>

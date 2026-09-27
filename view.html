@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Participants - Club Marathon</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f7f6fb;
+            color: #292553;
+        }
+
+        /* ================= NAVBAR ================= */
+
+        .navbar {
+            background: linear-gradient(90deg, #211b55, #4b2b8f, #7b287d);
+            padding: 14px 35px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 3px 12px rgba(40, 20, 80, 0.25);
+        }
+
+        .logo {
+            color: white;
+            font-size: 21px;
+            font-weight: bold;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 8px;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            padding: 9px 15px;
+            border-radius: 7px;
+            font-size: 14px;
+        }
+
+        .nav-links a:hover {
+            background: rgba(255,255,255,0.18);
+        }
+
+        .nav-links a.active {
+            background: #ed5b73;
+        }
+
+        /* ================= PAGE HEADER ================= */
+
+        .page-header {
+            background:
+                radial-gradient(circle at 90% 20%, rgba(237,91,115,0.35), transparent 25%),
+                linear-gradient(110deg, #211b55, #49309b, #7d2d78);
+
+            color: white;
+            text-align: center;
+            padding: 38px 20px;
+        }
+
+        .page-header h1 {
+            margin: 0;
+            font-size: 34px;
+        }
+
+        .page-header p {
+            margin: 10px 0 0;
+            font-size: 15px;
+            opacity: 0.95;
+        }
+
+        .gold-line {
+            width: 55px;
+            height: 4px;
+            background: #ffd23f;
+            margin: 14px auto 0;
+            border-radius: 10px;
+        }
+
+        /* ================= CONTAINER ================= */
+
+        .container {
+            width: 94%;
+            max-width: 1500px;
+            margin: 30px auto;
+        }
+
+        /* ================= SEARCH ================= */
+
+        .search-box {
+            background: white;
+            padding: 22px;
+            margin-bottom: 25px;
+            border-radius: 14px;
+            box-shadow: 0 5px 18px rgba(50, 35, 90, 0.10);
+            border-left: 5px solid #6d3bb8;
+        }
+
+        .search-title {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 15px;
+            color: #352b69;
+        }
+
+        .search-form {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .search-box input {
+            flex: 1;
+            padding: 13px 15px;
+            border: 1px solid #d7d2e8;
+            border-radius: 8px;
+            font-size: 15px;
+            outline: none;
+        }
+
+        .search-box input:focus {
+            border-color: #7540bd;
+            box-shadow: 0 0 0 3px rgba(117,64,189,0.10);
+        }
+
+        .search-btn {
+            padding: 13px 22px;
+            background: linear-gradient(135deg, #693bb5, #8d327e);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .search-btn:hover {
+            opacity: 0.9;
+        }
+
+        .clear-btn {
+            padding: 13px 20px;
+            background: #eeeaf5;
+            color: #4d426b;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: bold;
+        }
+
+        .clear-btn:hover {
+            background: #ddd6ec;
+        }
+
+        /* ================= TABLE ================= */
+
+        .table-container {
+            background: white;
+            padding: 18px;
+            border-radius: 14px;
+            box-shadow: 0 5px 18px rgba(50, 35, 90, 0.10);
+            overflow-x: auto;
+        }
+
+        .table-title {
+            font-size: 20px;
+            font-weight: bold;
+            color: #352b69;
+            margin-bottom: 15px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 1300px;
+        }
+
+        th {
+            background: linear-gradient(90deg, #49309b, #75308c);
+            color: white;
+            padding: 14px 10px;
+            text-align: center;
+            font-size: 14px;
+            white-space: nowrap;
+        }
+
+        th:first-child {
+            border-radius: 8px 0 0 0;
+        }
+
+        th:last-child {
+            border-radius: 0 8px 0 0;
+        }
+
+        td {
+            padding: 12px 10px;
+            text-align: center;
+            border-bottom: 1px solid #eee9f5;
+            font-size: 14px;
+            color: #40395a;
+        }
+
+        tr:hover td {
+            background: #faf6ff;
+        }
+
+        /* ================= FEE STATUS ================= */
+
+        td:nth-child(12) {
+            font-weight: bold;
+        }
+
+        /* ================= ACTION BUTTONS ================= */
+
+        .edit {
+            display: inline-block;
+            background: #6f3db8;
+            color: white;
+            padding: 7px 11px;
+            text-decoration: none;
+            border-radius: 6px;
+            font-size: 13px;
+            font-weight: bold;
+        }
+
+        .edit:hover {
+            background: #542b91;
+        }
+
+        .delete {
+            display: inline-block;
+            background: #ed5b73;
+            color: white;
+            padding: 7px 11px;
+            text-decoration: none;
+            border-radius: 6px;
+            margin-left: 5px;
+            font-size: 13px;
+            font-weight: bold;
+        }
+
+        .delete:hover {
+            background: #d9415a;
+        }
+
+        /* ================= BACK BUTTON ================= */
+
+        .back {
+            display: inline-block;
+            margin-top: 22px;
+            padding: 11px 20px;
+            background: #292253;
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: bold;
+        }
+
+        .back:hover {
+            background: #49309b;
+        }
+
+        /* ================= EMPTY ================= */
+
+        .empty {
+            padding: 35px !important;
+            color: #888;
+            font-size: 17px;
+        }
+
+        /* ================= MOBILE ================= */
+
+        @media (max-width: 700px) {
+
+            .navbar {
+                flex-direction: column;
+                gap: 12px;
+                padding: 15px;
+            }
+
+            .nav-links {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .page-header h1 {
+                font-size: 26px;
+            }
+
+            .container {
+                width: 95%;
+            }
+
+            .search-form {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .search-box input {
+                width: 100%;
+            }
+
+            .search-btn,
+            .clear-btn {
+                text-align: center;
+                width: 100%;
+            }
+
+        }
+
+    </style>
+</head>
+
+
+<body>
+
+
+    <!-- ================= NAVBAR ================= -->
+
+    <div class="navbar">
+
+        <div class="logo">
+            🏃 Club Marathon
+        </div>
+
+        <div class="nav-links">
+
+            <a href="/">
+                Home
+            </a>
+
+            <a href="/dashboard">
+                Dashboard
+            </a>
+
+            <a href="/view" class="active">
+                Participants
+            </a>
+
+            <a href="/reports">
+                Reports
+            </a>
+
+            <a href="/transactions">
+                Transactions
+            </a>
+
+        </div>
+
+    </div>
+
+
+    <!-- ================= PAGE HEADER ================= -->
+
+    <div class="page-header">
+
+        <h1>
+            👥 Registered Participants
+        </h1>
+
+        <p>
+            Manage and view all registered marathon participants
+        </p>
+
+        <div class="gold-line"></div>
+
+    </div>
+
+
+    <!-- ================= MAIN CONTENT ================= -->
+
+    <div class="container">
+
+
+        <!-- SEARCH -->
+
+        <div class="search-box">
+
+            <div class="search-title">
+                🔍 Search Participants
+            </div>
+
+            <form
+                action="/view"
+                method="GET"
+                class="search-form"
+            >
+
+                <input
+                    type="text"
+                    name="search"
+                    placeholder="Search by name, email or mobile..."
+                    value="{{ search }}"
+                >
+
+                <button
+                    type="submit"
+                    class="search-btn"
+                >
+                    🔍 Search
+                </button>
+
+                <a
+                    href="/view"
+                    class="clear-btn"
+                >
+                    Clear
+                </a>
+
+            </form>
+
+        </div>
+
+
+        <!-- TABLE -->
+
+        <div class="table-container">
+
+            <div class="table-title">
+                📋 Participant Details
+            </div>
+
+            <table>
+
+                <thead>
+
+                    <tr>
+
+                        <th>ID</th>
+
+                        <th>Name</th>
+
+                        <th>Age</th>
+
+                        <th>Gender</th>
+
+                        <th>Email</th>
+
+                        <th>Mobile</th>
+
+                        <th>Address</th>
+
+                        <th>Blood Group</th>
+
+                        <th>Emergency Contact</th>
+
+                        <th>Race Distance</th>
+
+                        <th>T-Shirt</th>
+
+                        <th>Fee Status</th>
+
+                        <th>Membership Type</th>
+
+                        <th>Actions</th>
+
+                    </tr>
+
+                </thead>
+
+
+                <tbody>
+
+                    {% for user in participants %}
+
+                    <tr>
+
+                        <td>
+                            {{ user["id"] }}
+                        </td>
+
+                        <td>
+                            {{ user["name"] }}
+                        </td>
+
+                        <td>
+                            {{ user["age"] }}
+                        </td>
+
+                        <td>
+                            {{ user["gender"] }}
+                        </td>
+
+                        <td>
+                            {{ user["email"] }}
+                        </td>
+
+                        <td>
+                            {{ user["mobile"] }}
+                        </td>
+
+                        <td>
+                            {{ user["address"] }}
+                        </td>
+
+                        <td>
+                            {{ user["blood_group"] }}
+                        </td>
+
+                        <td>
+                            {{ user["emergency_contact"] }}
+                        </td>
+
+                        <td>
+                            {{ user["race_distance"] }}
+                        </td>
+
+                        <td>
+                            {{ user["tshirt_size"] }}
+                        </td>
+
+                        <td>
+                            {{ user["fee_status"] }}
+                        </td>
+
+                        <td>
+                            {{ user["membership_type"] }}
+                        </td>
+
+                        <td>
+
+                            <a
+                                href="/edit/{{ user['id'] }}"
+                                class="edit"
+                            >
+                                ✏️ Edit
+                            </a>
+
+                            <a
+                                href="/delete/{{ user['id'] }}"
+                                class="delete"
+                                onclick="return confirm('Are you sure you want to delete this participant?');"
+                            >
+                                🗑️ Delete
+                            </a>
+
+                        </td>
+
+                    </tr>
+
+                    {% else %}
+
+                    <tr>
+
+                        <td
+                            colspan="14"
+                            class="empty"
+                        >
+                            No participants found.
+                        </td>
+
+                    </tr>
+
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+
+        <!-- BACK -->
+
+        <a
+            href="/dashboard"
+            class="back"
+        >
+            ← Back to Dashboard
+        </a>
+
+
+    </div>
+
+
+</body>
+
+</html>

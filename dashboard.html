@@ -1,0 +1,1085 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Club Marathon Dashboard</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background:
+                radial-gradient(circle at top left,
+                    rgba(123,44,191,0.12),
+                    transparent 30%),
+                radial-gradient(circle at bottom right,
+                    rgba(255,79,129,0.10),
+                    transparent 30%),
+                #f8f7fc;
+            color: #292334;
+        }
+
+        /* ================= NAVBAR ================= */
+
+        .navbar {
+            background: linear-gradient(
+                135deg,
+                #240046,
+                #5a189a,
+                #7b2cbf
+            );
+
+            padding: 10px 35px;
+
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+
+            box-shadow: 0 5px 20px rgba(36,0,70,0.25);
+        }
+
+        .logo {
+            color: white;
+            font-size: 20px;
+            font-weight: bold;
+
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo img {
+            width: 45px;
+            height: 45px;
+
+            object-fit: contain;
+            border-radius: 50%;
+
+            background: white;
+            padding: 3px;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+
+            padding: 9px 15px;
+            border-radius: 8px;
+
+            font-size: 14px;
+            font-weight: 600;
+
+            transition: 0.25s;
+        }
+
+        .nav-links a:hover {
+            background: rgba(255,255,255,0.15);
+        }
+
+        .nav-links .active {
+            background: #ff4f81;
+
+            box-shadow:
+                0 4px 12px rgba(255,79,129,0.30);
+        }
+
+
+        /* ================= HEADER ================= */
+
+        .header {
+            position: relative;
+
+            background:
+                radial-gradient(circle at top right,
+                    rgba(255,79,129,0.35),
+                    transparent 30%),
+                linear-gradient(
+                    135deg,
+                    #240046,
+                    #5a189a,
+                    #7b2cbf
+                );
+
+            color: white;
+
+            text-align: center;
+
+            padding: 45px 20px;
+
+            overflow: hidden;
+        }
+
+        .header::after {
+            content: "";
+
+            position: absolute;
+
+            width: 180px;
+            height: 180px;
+
+            border-radius: 50%;
+
+            background: rgba(245,183,0,0.10);
+
+            right: -60px;
+            top: -80px;
+        }
+
+        .header h1 {
+            position: relative;
+            z-index: 2;
+
+            margin: 0;
+
+            font-size: 34px;
+            font-weight: 800;
+        }
+
+        .header p {
+            position: relative;
+            z-index: 2;
+
+            margin: 10px 0 0;
+
+            color: #f4eaff;
+            font-size: 16px;
+        }
+
+        .gold-line {
+            position: relative;
+            z-index: 2;
+
+            width: 65px;
+            height: 4px;
+
+            background: #f5b700;
+
+            border-radius: 10px;
+
+            margin: 14px auto 0;
+        }
+
+
+        /* ================= CONTAINER ================= */
+
+        .container {
+            width: 90%;
+            max-width: 1150px;
+
+            margin: 32px auto 50px;
+        }
+
+
+        /* ================= WELCOME ================= */
+
+        .welcome {
+            background: white;
+
+            padding: 27px;
+
+            border-radius: 18px;
+
+            box-shadow:
+                0 8px 25px rgba(45,20,80,0.08);
+
+            margin-bottom: 28px;
+
+            border-left: 5px solid #7b2cbf;
+        }
+
+        .welcome h2 {
+            margin: 0 0 8px;
+
+            color: #3c096c;
+        }
+
+        .welcome p {
+            color: #666;
+            margin: 0;
+        }
+
+
+        /* ================= STATISTICS ================= */
+
+        .stats {
+            display: grid;
+
+            grid-template-columns:
+                repeat(5, 1fr);
+
+            gap: 17px;
+        }
+
+        .stat-card {
+            position: relative;
+
+            background: white;
+
+            text-align: center;
+
+            padding: 24px 10px;
+
+            border-radius: 16px;
+
+            box-shadow:
+                0 7px 22px rgba(45,20,80,0.08);
+
+            border-top: 4px solid #7b2cbf;
+
+            transition: 0.25s;
+
+            overflow: hidden;
+        }
+
+        .stat-card::after {
+            content: "";
+
+            position: absolute;
+
+            width: 65px;
+            height: 65px;
+
+            border-radius: 50%;
+
+            background: rgba(245,183,0,0.08);
+
+            right: -25px;
+            top: -25px;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+
+            box-shadow:
+                0 12px 28px rgba(45,20,80,0.14);
+        }
+
+        .stat-card h3 {
+            font-size: 14px;
+
+            margin: 4px 0 12px;
+
+            color: #555;
+
+            position: relative;
+            z-index: 2;
+        }
+
+        .number {
+            font-size: 34px;
+
+            font-weight: 800;
+
+            color: #6a0dad;
+
+            position: relative;
+            z-index: 2;
+        }
+
+
+        /* ================= DISTANCE TITLE ================= */
+
+        .distance-title {
+            text-align: center;
+
+            margin-top: 42px;
+            margin-bottom: 20px;
+
+            color: #3c096c;
+
+            font-size: 25px;
+        }
+
+
+        /* ================= RACE CARDS ================= */
+
+        .distance-cards {
+            display: grid;
+
+            grid-template-columns:
+                repeat(4, 1fr);
+
+            gap: 20px;
+        }
+
+        .distance-card {
+            background: white;
+
+            padding: 28px 20px;
+
+            text-align: center;
+
+            border-radius: 17px;
+
+            box-shadow:
+                0 7px 22px rgba(45,20,80,0.08);
+
+            transition: 0.25s;
+
+            border-top: 4px solid #ff4f81;
+        }
+
+        .distance-card:hover {
+            transform: translateY(-6px);
+
+            box-shadow:
+                0 12px 28px rgba(45,20,80,0.14);
+        }
+
+        .distance-card h2 {
+            color: #7b2cbf;
+
+            margin: 0 0 10px;
+
+            font-size: 25px;
+        }
+
+        .distance-number {
+            font-size: 40px;
+
+            font-weight: 800;
+
+            color: #292334;
+        }
+
+        .distance-card p {
+            color: #777;
+
+            margin: 5px 0 0;
+        }
+
+
+        /* ================= ACTION CARDS ================= */
+
+        .cards {
+            display: grid;
+
+            grid-template-columns:
+                repeat(2, 1fr);
+
+            gap: 22px;
+
+            margin-top: 35px;
+        }
+
+        .card {
+            background: white;
+
+            padding: 28px;
+
+            text-align: center;
+
+            border-radius: 17px;
+
+            box-shadow:
+                0 7px 22px rgba(45,20,80,0.08);
+
+            transition: 0.25s;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+
+            box-shadow:
+                0 12px 28px rgba(45,20,80,0.14);
+        }
+
+        .card h2 {
+            color: #3c096c;
+
+            margin-top: 0;
+        }
+
+        .card p {
+            color: #666;
+        }
+
+        .button {
+            display: inline-block;
+
+            margin-top: 12px;
+
+            padding: 11px 22px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #6a0dad,
+                    #9d2cff
+                );
+
+            color: white;
+
+            text-decoration: none;
+
+            border-radius: 9px;
+
+            font-weight: bold;
+
+            transition: 0.25s;
+        }
+
+        .button:hover {
+            color: white;
+
+            transform: translateY(-2px);
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #ff4f81,
+                    #d63384
+                );
+        }
+
+
+        /* ================= COACH ================= */
+
+        .coach {
+            margin-top: 32px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #ffffff,
+                    #fff7fb
+                );
+
+            padding: 30px;
+
+            text-align: center;
+
+            border-radius: 18px;
+
+            box-shadow:
+                0 7px 22px rgba(45,20,80,0.08);
+
+            border-top: 4px solid #f5b700;
+        }
+
+        .coach h2 {
+            color: #7b2cbf;
+
+            margin-bottom: 10px;
+        }
+
+        .coach h3 {
+            margin-bottom: 8px;
+
+            color: #333;
+        }
+
+        .coach p {
+            color: #777;
+        }
+
+
+        /* ================= RECENT PARTICIPANTS ================= */
+
+        .recent-section {
+            margin-top: 38px;
+        }
+
+        .recent-table {
+            background: white;
+
+            border-radius: 17px;
+
+            overflow: hidden;
+
+            box-shadow:
+                0 7px 22px rgba(45,20,80,0.08);
+        }
+
+        .recent-table table {
+            width: 100%;
+
+            border-collapse: collapse;
+        }
+
+        .recent-table th {
+            background:
+                linear-gradient(
+                    135deg,
+                    #5a189a,
+                    #7b2cbf
+                );
+
+            color: white;
+
+            padding: 15px;
+
+            text-align: center;
+        }
+
+        .recent-table td {
+            padding: 14px;
+
+            text-align: center;
+
+            border-bottom: 1px solid #eee;
+        }
+
+        .recent-table tr:hover {
+            background: #fcf8ff;
+        }
+
+        .view-all-btn {
+            display: inline-block;
+
+            padding: 11px 22px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #ff4f81,
+                    #d63384
+                );
+
+            color: white;
+
+            text-decoration: none;
+
+            border-radius: 9px;
+
+            font-weight: bold;
+
+            transition: 0.25s;
+        }
+
+        .view-all-btn:hover {
+            color: white;
+
+            transform: translateY(-2px);
+        }
+
+
+        /* ================= FOOTER ================= */
+
+        .footer {
+            text-align: center;
+
+            padding: 25px;
+
+            color: #888;
+
+            font-size: 13px;
+        }
+
+        .footer span {
+            color: #f5b700;
+
+            font-weight: bold;
+        }
+
+
+        /* ================= MOBILE ================= */
+
+        @media (max-width: 900px) {
+
+            .stats {
+                grid-template-columns:
+                    repeat(2, 1fr);
+            }
+
+            .distance-cards {
+                grid-template-columns:
+                    repeat(2, 1fr);
+            }
+        }
+
+
+        @media (max-width: 600px) {
+
+            .navbar {
+                flex-direction: column;
+
+                gap: 10px;
+
+                padding: 12px;
+            }
+
+            .nav-links {
+                flex-wrap: wrap;
+
+                justify-content: center;
+            }
+
+            .nav-links a {
+                padding: 8px 10px;
+            }
+
+            .header h1 {
+                font-size: 27px;
+            }
+
+            .container {
+                width: 94%;
+            }
+
+            .stats,
+            .distance-cards,
+            .cards {
+                grid-template-columns: 1fr;
+            }
+
+            .recent-table {
+                overflow-x: auto;
+            }
+
+            .recent-table table {
+                min-width: 600px;
+            }
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- ================= NAVBAR ================= -->
+
+<div class="navbar">
+
+    <div class="logo">
+
+        <img
+            src="/static/logo.jpeg"
+            alt="Club Marathon Logo">
+
+        <span>Club Marathon</span>
+
+    </div>
+
+
+    <div class="nav-links">
+
+        <a href="/">
+            Home
+        </a>
+
+        <a href="/dashboard"
+           class="active">
+            Dashboard
+        </a>
+
+        <a href="/view">
+            Participants
+        </a>
+
+        <a href="/reports">
+            Reports
+        </a>
+
+    </div>
+
+</div>
+
+
+<!-- ================= HEADER ================= -->
+
+<div class="header">
+
+    <h1>
+        🏃 Club Marathon Dashboard
+    </h1>
+
+    <p>
+        Participant Management System
+    </p>
+
+    <div class="gold-line"></div>
+
+</div>
+
+
+<!-- ================= MAIN ================= -->
+
+<div class="container">
+
+
+    <!-- WELCOME -->
+
+    <div class="welcome">
+
+        <h2>
+            Welcome to Club Marathon 👋
+        </h2>
+
+        <p>
+            Manage marathon participants, registrations,
+            payments and race information from one place.
+        </p>
+
+    </div>
+
+
+    <!-- ================= MAIN STATISTICS ================= -->
+
+    <div class="stats">
+
+
+        <div class="stat-card">
+
+            <h3>
+                👥 Total Participants
+            </h3>
+
+            <div class="number">
+                {{ total }}
+            </div>
+
+        </div>
+
+
+        <div class="stat-card">
+
+            <h3>
+                👨 Male
+            </h3>
+
+            <div class="number">
+                {{ male }}
+            </div>
+
+        </div>
+
+
+        <div class="stat-card">
+
+            <h3>
+                👩 Female
+            </h3>
+
+            <div class="number">
+                {{ female }}
+            </div>
+
+        </div>
+
+
+        <div class="stat-card">
+
+            <h3>
+                💰 Fee Paid
+            </h3>
+
+            <div class="number">
+                {{ paid }}
+            </div>
+
+        </div>
+
+
+        <div class="stat-card">
+
+            <h3>
+                ⏳ Fee Pending
+            </h3>
+
+            <div class="number">
+                {{ pending }}
+            </div>
+
+        </div>
+
+
+    </div>
+
+
+    <!-- ================= RACE DISTANCE ================= -->
+
+    <h2 class="distance-title">
+        🏃 Race Distance Statistics
+    </h2>
+
+
+    <div class="distance-cards">
+
+
+        <div class="distance-card">
+
+            <h2>5K</h2>
+
+            <div class="distance-number">
+                {{ race_5k }}
+            </div>
+
+            <p>
+                Participants
+            </p>
+
+        </div>
+
+
+        <div class="distance-card">
+
+            <h2>10K</h2>
+
+            <div class="distance-number">
+                {{ race_10k }}
+            </div>
+
+            <p>
+                Participants
+            </p>
+
+        </div>
+
+
+        <div class="distance-card">
+
+            <h2>21K</h2>
+
+            <div class="distance-number">
+                {{ race_21k }}
+            </div>
+
+            <p>
+                Half Marathon
+            </p>
+
+        </div>
+
+
+        <div class="distance-card">
+
+            <h2>42K</h2>
+
+            <div class="distance-number">
+                {{ race_42k }}
+            </div>
+
+            <p>
+                Full Marathon
+            </p>
+
+        </div>
+
+
+    </div>
+
+
+    <!-- ================= ACTION CARDS ================= -->
+
+    <div class="cards">
+
+
+        <div class="card">
+
+            <h2>
+                📝 Registration
+            </h2>
+
+            <p>
+                Register a new marathon participant.
+            </p>
+
+            <a href="/" class="button">
+                Register Now
+            </a>
+
+        </div>
+
+
+        <div class="card">
+
+            <h2>
+                👥 Participants
+            </h2>
+
+            <p>
+                View, search, edit or delete participants.
+            </p>
+
+            <a href="/view" class="button">
+                View Participants
+            </a>
+
+        </div>
+
+
+        <div class="card">
+
+            <h2>
+                📊 Reports
+            </h2>
+
+            <p>
+                View detailed participant and fee reports.
+            </p>
+
+            <a href="/reports" class="button">
+                View Reports
+            </a>
+
+        </div>
+
+
+        <div class="card">
+
+            <h2>
+                📋 Management
+            </h2>
+
+            <p>
+                Manage all Club Marathon registration data.
+            </p>
+
+            <a href="/view" class="button">
+                Manage Data
+            </a>
+
+        </div>
+
+
+    </div>
+
+
+    <!-- ================= COACH ================= -->
+
+    <div class="coach">
+
+        <h2>
+            👨‍🏫 Coach
+        </h2>
+
+        <h3>
+            Sanjay Shinde
+        </h3>
+
+        <p>
+            Club Marathon Coach
+        </p>
+
+    </div>
+
+
+    <!-- ================= RECENT PARTICIPANTS ================= -->
+
+    <div class="recent-section">
+
+        <h2 class="distance-title">
+            📋 Recent Participants
+        </h2>
+
+
+        <div class="recent-table">
+
+            <table>
+
+                <thead>
+
+                    <tr>
+
+                        <th>ID</th>
+
+                        <th>Name</th>
+
+                        <th>Race</th>
+
+                        <th>Fee Status</th>
+
+                    </tr>
+
+                </thead>
+
+
+                <tbody>
+
+                    {% for participant in recent_participants %}
+
+                    <tr>
+
+                        <td>
+                            {{ participant[0] }}
+                        </td>
+
+                        <td>
+                            {{ participant[1] }}
+                        </td>
+
+                        <td>
+                            {{ participant[2] }}
+                        </td>
+
+                        <td>
+                            {{ participant[3] }}
+                        </td>
+
+                    </tr>
+
+                    {% else %}
+
+                    <tr>
+
+                        <td colspan="4">
+                            No participants registered yet.
+                        </td>
+
+                    </tr>
+
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+
+        <div style="text-align:center; margin-top:20px;">
+
+            <a href="/view"
+               class="view-all-btn">
+
+                👥 View All Participants
+
+            </a>
+
+        </div>
+
+    </div>
+
+
+</div>
+
+
+<!-- ================= FOOTER ================= -->
+
+<div class="footer">
+
+    <p>
+        ©️ 2026 Club Marathon |
+        Participant Management System
+        <br>
+        <span>●</span> Run • Register • Achieve
+    </p>
+
+</div>
+
+
+</body>
+
+</html>

@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Participant Dashboard - Club Marathon</title>
+
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+        rel="stylesheet"
+    >
+
+    <style>
+
+        body {
+            margin: 0;
+            background: linear-gradient(135deg, #f8f5ff, #fff5f8);
+            font-family: Arial, sans-serif;
+        }
+
+        .top-bar {
+            height: 8px;
+            background: linear-gradient(
+                90deg,
+                #6f00b5,
+                #a020f0,
+                #ff4f9a,
+                #ffd43b
+            );
+        }
+
+        .navbar {
+            background: linear-gradient(
+                90deg,
+                #6f00b5,
+                #8b16c9
+            );
+        }
+
+        .navbar-brand {
+            font-weight: bold;
+            color: white !important;
+        }
+
+        .nav-link {
+            color: white !important;
+            font-weight: 600;
+        }
+
+        .dashboard-title {
+            color: #6f00b5;
+            font-weight: bold;
+        }
+
+        .welcome-card {
+            background: white;
+            border-radius: 18px;
+            padding: 25px;
+            box-shadow: 0 5px 20px rgba(111, 0, 181, 0.12);
+            border-left: 6px solid #a020f0;
+        }
+
+        .info-card {
+            background: white;
+            border-radius: 16px;
+            padding: 22px;
+            height: 100%;
+            box-shadow: 0 5px 18px rgba(111, 0, 181, 0.10);
+            border: 1px solid #eee2ff;
+        }
+
+        .card-title {
+            color: #6f00b5;
+            font-weight: bold;
+        }
+
+        .gold-line {
+            width: 55px;
+            height: 4px;
+            background: #ffd43b;
+            border-radius: 5px;
+            margin: 10px 0 20px;
+        }
+
+        .status-paid {
+            color: #198754;
+            font-weight: bold;
+        }
+
+        .status-pending {
+            color: #dc3545;
+            font-weight: bold;
+        }
+
+        .btn-purple {
+            background: linear-gradient(
+                90deg,
+                #6f00b5,
+                #a020f0
+            );
+            color: white;
+            border: none;
+            border-radius: 9px;
+            padding: 10px 20px;
+            font-weight: bold;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-purple:hover {
+            color: white;
+            background: #5b0095;
+        }
+
+        .logout {
+            background: #ff4f9a;
+            border-radius: 8px;
+            padding: 7px 15px !important;
+        }
+
+        .receipt-btn {
+            margin-top: 10px;
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+<!-- TOP COLOR BAR -->
+
+<div class="top-bar"></div>
+
+
+<!-- NAVBAR -->
+
+<nav class="navbar navbar-expand-lg">
+
+    <div class="container">
+
+        <a
+            class="navbar-brand"
+            href="/participant_dashboard"
+        >
+            🏃 Club Marathon
+        </a>
+
+
+        <div>
+
+            <a
+                class="nav-link d-inline-block logout"
+                href="/participant_logout"
+            >
+                Logout
+            </a>
+
+        </div>
+
+    </div>
+
+</nav>
+
+
+
+<!-- MAIN CONTAINER -->
+
+<div class="container py-5">
+
+
+    <!-- WELCOME CARD -->
+
+    <div class="welcome-card mb-4">
+
+        <h2 class="dashboard-title">
+
+            Welcome, {{ user["name"] }}! 👋
+
+        </h2>
+
+        <div class="gold-line"></div>
+
+        <p class="mb-0">
+
+            Welcome to your Club Marathon participant dashboard.
+
+        </p>
+
+    </div>
+
+
+
+    <!-- INFORMATION ROW -->
+
+    <div class="row g-4">
+
+
+        <!-- PARTICIPANT INFORMATION -->
+
+        <div class="col-md-6">
+
+            <div class="info-card">
+
+                <h4 class="card-title">
+
+                    👤 Participant Information
+
+                </h4>
+
+
+                <div class="gold-line"></div>
+
+
+                <p>
+
+                    <strong>Name:</strong>
+
+                    {{ user["name"] }}
+
+                </p>
+
+
+                <p>
+
+                    <strong>Email:</strong>
+
+                    {{ user["email"] }}
+
+                </p>
+
+
+
+                {% if registration %}
+
+
+                <p>
+
+                    <strong>Registration ID:</strong>
+
+                    #{{ registration["id"] }}
+
+                </p>
+
+
+                <p>
+
+                    <strong>Race Distance:</strong>
+
+                    {{ registration["race_distance"] }}
+
+                </p>
+
+
+                <p>
+
+                    <strong>T-Shirt Size:</strong>
+
+                    {{ registration["tshirt_size"] }}
+
+                </p>
+
+
+                <p>
+
+                    <strong>Fee Status:</strong>
+
+
+                    {% if registration["fee_status"] == "Paid" %}
+
+                        <span class="status-paid">
+
+                            Paid
+
+                        </span>
+
+                    {% else %}
+
+                        <span class="status-pending">
+
+                            {{ registration["fee_status"] }}
+
+                        </span>
+
+                    {% endif %}
+
+                </p>
+
+
+
+                <!-- MAKE PAYMENT BUTTON -->
+
+                {% if registration["fee_status"] != "Paid" %}
+
+                    <a
+                        href="/participant_payment"
+                        class="btn btn-purple mt-3"
+                    >
+
+                        💳 Make Payment
+
+                    </a>
+
+                {% endif %}
+
+
+
+                {% else %}
+
+
+                    <div class="alert alert-warning">
+
+                        Your marathon registration details are not linked yet.
+
+                    </div>
+
+
+                {% endif %}
+
+
+            </div>
+
+        </div>
+
+
+
+        <!-- PAYMENT INFORMATION -->
+
+        <div class="col-md-6">
+
+            <div class="info-card">
+
+
+                <h4 class="card-title">
+
+                    💳 Payment Information
+
+                </h4>
+
+
+                <div class="gold-line"></div>
+
+
+
+                {% if transaction %}
+
+
+                    <!-- AMOUNT -->
+
+                    <p>
+
+                        <strong>Amount:</strong>
+
+                        ₹{{ transaction["amount"] }}
+
+                    </p>
+
+
+
+                    <!-- PAYMENT METHOD -->
+
+                    <p>
+
+                        <strong>Payment Method:</strong>
+
+                        {{ transaction["payment_method"] }}
+
+                    </p>
+
+
+
+                    <!-- PAYMENT STATUS -->
+
+                    <p>
+
+                        <strong>Status:</strong>
+
+
+                        {% if transaction["payment_status"] == "Paid" %}
+
+                            <span class="status-paid">
+
+                                Paid
+
+                            </span>
+
+                        {% else %}
+
+                            <span class="status-pending">
+
+                                {{ transaction["payment_status"] }}
+
+                            </span>
+
+                        {% endif %}
+
+                    </p>
+
+
+
+                    <!-- TRANSACTION DATE -->
+
+                    <p>
+
+                        <strong>Date:</strong>
+
+                        {{ transaction["transaction_date"] }}
+
+                    </p>
+
+
+
+                    <!-- RECEIPT BUTTON -->
+
+                    {% if transaction["payment_status"] == "Paid" %}
+
+                        <a
+                            href="/participant_receipt"
+                            class="btn btn-purple receipt-btn"
+                            target="_blank"
+                        >
+
+                            🧾 View / Print Receipt
+
+                        </a>
+
+                    {% endif %}
+
+
+
+                {% else %}
+
+
+                    <div class="alert alert-info">
+
+                        No transaction found yet.
+
+                    </div>
+
+
+                {% endif %}
+
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- QUICK ACTIONS -->
+
+    <div class="d-flex flex-wrap gap-3 mt-4">
+
+
+        {% if registration %}
+
+
+            <a
+                href="/participant_dashboard"
+                class="btn btn-purple"
+            >
+
+                🏠 Dashboard
+
+            </a>
+
+
+        {% else %}
+
+
+            <a
+                href="/participant_register"
+                class="btn btn-purple"
+            >
+
+                🏃 Register for Marathon
+
+            </a>
+
+
+        {% endif %}
+
+
+
+        <a
+            href="/participant_logout"
+            class="btn btn-outline-danger"
+        >
+
+            Logout
+
+        </a>
+
+
+    </div>
+
+
+</div>
+
+
+
+<!-- BOOTSTRAP JS -->
+
+<script
+    src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js">
+</script>
+
+
+</body>
+
+</html>
